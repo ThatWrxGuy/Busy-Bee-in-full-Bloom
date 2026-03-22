@@ -1,0 +1,14 @@
+
+
+```env
+# API Configuration
+VITE_API_URL=http://localhost:8000
+
+# Supabase Configuration
+# Get these from your Supabase dashboard: https://app.supabase.com/project/YOUR_PROJECT/settings/api
+VITE_SUPABASE_URL=https:// wumouqviaktraclpybgk.supabase.co
+VITE_SUPABASE_ANON_KEY= sb_publishable_xOfmvUw7CTL4Bu1z9CXI7A_2i27J38I
+
+# OpenAI Configuration (for AI-powered features - optional)
+VITE_OPENAI_API_KEY= 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
+```
