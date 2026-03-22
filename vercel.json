@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd main-project/Busy-Bee-Holdings-LLC-main/frontend && npm run build",
+  "buildCommand": "cd main-project/Busy-Bee-Holdings-LLC-main/frontend && npx vite build",
   "outputDirectory": "main-project/Busy-Bee-Holdings-LLC-main/frontend/dist",
   "installCommand": "cd main-project/Busy-Bee-Holdings-LLC-main/frontend && npm install",
   "framework": "vite"
