@@ -68,9 +68,12 @@ const NavItem = ({ to, icon: Icon, label, isCollapsed, onClick }) => {
  * Design System Sidebar
  * Single source of truth for sidebar styling
  */
-function Sidebar({ onClose, isCollapsed, isMobile = false }) {
+function Sidebar({ onClose, isCollapsed, onToggle, isMobile = false }) {
   const { user, profile, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Provide default onToggle if not passed
+  const handleToggle = onToggle || (() => {});
 
   const navSections = [
     {
@@ -158,7 +161,7 @@ function Sidebar({ onClose, isCollapsed, isMobile = false }) {
       {/* Toggle Button (Desktop only) */}
       {!isMobile && (
         <button
-          onClick={onToggle}
+          onClick={handleToggle}
           className="flex items-center justify-center mx-2 mb-4 p-2 rounded-lg text-foreground-muted hover:bg-secondary transition-colors"
         >
           {isCollapsed ? <FiChevronRight size={16} /> : <FiChevronLeft size={16} />}
