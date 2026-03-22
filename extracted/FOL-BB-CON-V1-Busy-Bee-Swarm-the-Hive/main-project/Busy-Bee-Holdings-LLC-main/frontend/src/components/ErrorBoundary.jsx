@@ -34,7 +34,7 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      // Custom fallback UI
+      // Custom fallback UI - always show children even on error
       return (
         <div className="min-h-screen flex items-center justify-center bg-background p-4">
           <div className="max-w-md w-full text-center">
@@ -56,7 +56,7 @@ class ErrorBoundary extends Component {
               </div>
               <h1 className="text-2xl font-bold text-foreground">Something went wrong</h1>
               <p className="text-foreground-muted mt-2">
-                We're sorry, but something unexpected happened.
+                {this.state.error?.message || "We're sorry, but something unexpected happened."}
               </p>
             </div>
 
@@ -73,8 +73,8 @@ class ErrorBoundary extends Component {
               </div>
             </div>
 
-            {/* Show error details in development */}
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {/* Show error details in production too */}
+            {this.state.error && (
               <details className="mt-6 text-left">
                 <summary className="cursor-pointer text-sm text-foreground-muted mb-2">
                   Error Details
