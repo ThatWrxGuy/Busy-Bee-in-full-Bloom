@@ -10,6 +10,12 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Skip auth if Supabase is not configured
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
@@ -25,10 +31,13 @@ export function AuthProvider({ children }) {
     // Initial auth check
     checkAuth();
 
-    return () => subscription.unsubscribe();
+    return () => {
+      if (subscription) subscription.unsubscribe();
+    };
   }, []);
 
   const checkAuth = async () => {
+    if (!supabase) return;
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
@@ -54,6 +63,10 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => {
+    if (!supabase) {
+      setError('Supabase not configured. Please add environment variables.');
+      return false;
+    }
     setError(null);
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -73,6 +86,10 @@ export function AuthProvider({ children }) {
   };
 
   const signup = async (email, password, fullName) => {
+    if (!supabase) {
+      setError('Supabase not configured. Please add environment variables.');
+      return false;
+    }
     setError(null);
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -101,6 +118,11 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+    if (!supabase) {
+      setUser(null);
+      setProfile(null);
+      return;
+    }
     try {
       await supabase.auth.signOut();
     } catch (err) {
