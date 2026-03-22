@@ -3,10 +3,23 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+console.log('Supabase URL:', supabaseUrl ? 'set' : 'NOT SET');
+console.log('Supabase Key:', supabaseAnonKey ? 'set' : 'NOT SET');
+
 // Only create client if env vars are properly set
-export const supabase = (supabaseUrl && supabaseAnonKey) 
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
+let supabase = null;
+try {
+  if (supabaseUrl && supabaseAnonKey) {
+    supabase = createClient(supabaseUrl, supabaseAnonKey);
+    console.log('Supabase client created successfully');
+  } else {
+    console.log('Skipping Supabase client creation - missing env vars');
+  }
+} catch (e) {
+  console.error('Error creating Supabase client:', e);
+}
+
+export { supabase };
 
 // Auth helpers
 export const signUp = async (email, password, username) => {
